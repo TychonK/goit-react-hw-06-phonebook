@@ -7,11 +7,36 @@ import { Filter } from './components/Filter/Filter'
 
 import store from './redux/store'
 import { addContact, deleteContact, filter } from './redux/actions'
-import { connect } from 'react-redux'
 
 store.dispatch(addContact(10))
 
-function App() {
+export default function App() {
+    const [contacts, setContacts] = useState([]);
+    const [filter, setFilter] = useState('');
+
+    useEffect(() => {
+        if (localStorage.getItem("contacts")) {
+            setContacts(JSON.parse(localStorage.getItem("contacts")))
+        }
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem("contacts", JSON.stringify(contacts))
+    }, [contacts])
+
+    const addNewContact = (obj) => {
+        setContacts([...contacts, obj])
+    }
+  
+    const handleSearch = (e) => {
+        setFilter(e.target.value)
+    }
+
+    const deleteContact = (e) => {
+        const contactsList = contacts.filter(contact => contact.name !== e.target.id);
+        setContacts(contactsList)
+    }
+
     return (
       <div className="App">
         <Form addNewContact={addNewContact} existing={contacts}/>
@@ -24,5 +49,3 @@ function App() {
       </div>
     )
 }
-
-export default connect()(App)
