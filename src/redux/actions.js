@@ -12,3 +12,8 @@ export const filter = (value) => ({
     type: 'filter/changeFilter',
     payload: value,
 })
+
+export const pageLoaded = (value) => ({
+    type: 'page/pageLoaded',
+    payload: value,
+})

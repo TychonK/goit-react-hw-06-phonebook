@@ -1,8 +1,11 @@
-function ListItems({ arr, filter, deleteContact }) {
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions'
+
+function ListItems({ arr, filterWord, deleteContact }) {
     const listMarkup = arr.filter((val) => {
-        if (filter === "") {
+        if (filterWord === "") {
             return val
-        } else if (val.name.toLowerCase().includes(filter.toLowerCase())) {
+        } else if (val.name.toLowerCase().includes(filterWord.toLowerCase())) {
             return val
         }
     }).map((val, index) => {
@@ -18,4 +21,17 @@ function ListItems({ arr, filter, deleteContact }) {
     )
 }
 
-export default ListItems;
+const mapStateToProps = state => {
+    return {
+        arr: state.contacts,
+        filterWord: state.filter,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        deleteContact: (e) => dispatch(actions.deleteContact(e))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListItems);

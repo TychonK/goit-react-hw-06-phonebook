@@ -1,7 +1,10 @@
 import { useState } from 'react'
+import { connect } from 'react-redux';
 import { v4 as uuid } from 'uuid'
 
-export function Form({addNewContact, existing}) {
+import * as actions from '../../redux/actions'
+
+function Form({ onSubmit, existing }) {
     const nameId = uuid()
     const numberId = uuid()
 
@@ -17,16 +20,19 @@ export function Form({addNewContact, existing}) {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+      e.preventDefault();
+      
         if (existing.some(e => e.name === name)) {
             alert(`${name} already exists.`)
             return
-        }
+      }
+      
         const obj = {
         name: name,
         number: number,
         }
-        addNewContact(obj)
+
+        onSubmit(obj)
         setName('')
         setNumber('')
     }
@@ -64,5 +70,13 @@ export function Form({addNewContact, existing}) {
           </label>
           <button className="add-button" type="submit">Add contact</button>
         </form>
-        )
+      )
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onSubmit: (obj) => dispatch(actions.addContact(obj))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Form)
