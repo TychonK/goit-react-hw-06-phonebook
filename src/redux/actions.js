@@ -1,19 +1,26 @@
-export const addContact = (value) => ({
-    type: 'form/addContact',
-    payload: value,
-})
+import { createAction } from '@reduxjs/toolkit'
 
-export const deleteContact = (value) => ({
-    type: 'form/deleteContact',
-    payload: value,
-})
+// const addContact = (value) => ({
+//     type: 'form/addContact',
+//     payload: value,
+// })
 
-export const filter = (value) => ({
-    type: 'filter/changeFilter',
-    payload: value,
-})
+// const deleteContact = (value) => ({
+//     type: 'form/deleteContact',
+//     payload: value,
+// })
 
-export const pageLoaded = (value) => ({
-    type: 'page/pageLoaded',
-    payload: value,
-})
+// const filter = (value) => ({
+//     type: 'filter/changeFilter',
+//     payload: value,
+// })
+
+// const pageLoaded = (value) => ({
+//     type: 'page/pageLoaded',
+//     payload: value,
+// })
+
+export const addContact = createAction('form/addContact')
+export const deleteContact = createAction('form/deleteContact')
+export const filter = createAction('filter/changeFilter')
+export const pageLoaded = createAction('page/pageLoaded')
